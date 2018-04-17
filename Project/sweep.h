@@ -4,10 +4,6 @@
  *  Created on: Mar 27, 2018
  *      Author: tdempsay
  */
-
-#ifndef SWEEP_H_
-#define SWEEP_H_
-
 #include <stdio.h>
 #include <stdint.h>
 #include <string.h>
@@ -19,10 +15,13 @@
 #include "servo.h"
 #include <stdbool.h>
 #include "uart.h"
-#include "WiFi.h"
-//#include "C:/ti/TivaWare_C_Series-2.1.2.111/driverlib/interrupt.h"
+
+#ifndef SWEEP_H_
+#define SWEEP_H_
 
 
 int sweep(void);
+
+void sendInfo(int deg, int distance, int width);
 
 #endif /* SWEEP_H_ */

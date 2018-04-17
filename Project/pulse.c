@@ -87,11 +87,9 @@ void send_pulse(void){
  */
 unsigned long pulse_getDist(void){
 	
-    unsigned long time_diff = 0;
+    unsigned long time_diff = 0, cm = 0;
     unsigned overflow = 0;
-    unsigned long cm = 0;
 
-  //pulse_init();
   send_pulse();
   while(1){
 
