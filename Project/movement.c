@@ -1,17 +1,29 @@
+/** 
+ *@file movement.c
+ *@brief this file contains methods for moving
+ *the cyBot.
+ *
+ *@author Tanner Dempsay
+ *
+ *@date 4/16/2018
+ */
+
 #include "movement.h"
 
-//Calibration constants - change during tests of different bots
+//Calibration constants - change when using different bots
 #define CALIB_L 0
 #define CALIB_R 0
 
-///Move forward a certain distance
 /**
+ * Moves the bot forward a certain distance at a set speed.
+ * Checks front sensors every cm while moving.
  * @param sensor - open interface sensor pointer
- * @param centimeters - how far the bot will travel before stopping
- * @param spd - speed, how fast the motors will turn
+ * @param centimeters - how far the bot will travel forward
+ * @param spd - speed, how fast the wheels will turn
  *
  * Sends a char to UART, 0 - 4, depending on if the bot encountered anything while moving.
- *
+ * @date 4/16/18
+ * @author Tanner Dempsay
  * Return 0 if clear.
  * Return 1 if left bumper hit.
  * Return 2 if right bumper hit.
@@ -48,13 +60,14 @@ char move_forward(oi_t *sensor, int centimeters, int spd) {
 }
 
 
-///Turn counterclockwise a certain number of degrees
 /**
- * The wheels are set to turn in opposite directions to cause the turn.
+ * Turn the bot counterclockwise a certain amount and speed
  *
  * @param sensor - an open interface sensor pointer
  * @param degrees - how far the bot will turn
  * @param speed - how fast to turn
+ * @author Tanner Dempsay
+ * @date 4/16/18
  */
 void turn_ccw(oi_t *sensor, int degrees, int speed) {
 
@@ -71,13 +84,15 @@ void turn_ccw(oi_t *sensor, int degrees, int speed) {
     uart_sendChar('6');
 }
 
-///Turn clockwise a certain number of degrees
 /**
- * The wheels are set to turn in opposite directions to cause the turn.
+ * Turn the bot clockwise a certain amount and speed
  *
  * @param sensor - an open interface sensor pointer
  * @param degrees - how far the bot will turn
  * @param speed - how fast to turn
+ *
+ * @author Tanner Dempsay
+ * @date 4/16/18
  */
 void turn_cw(oi_t *sensor, int degrees, int speed) {
 
@@ -105,6 +120,8 @@ void turn_cw(oi_t *sensor, int degrees, int speed) {
  * @param sensor - an open interface sensor pointer
  * @param centimeters - how far the bot will move backwards
  * @param spd - the speed at which the bot will move (speed of the motors)
+ * @author Tanner Dempsay
+ * @date 4/16/18
  */
 void move_backward(oi_t *sensor, int centimeters, int spd) {
 
@@ -125,20 +142,24 @@ void move_backward(oi_t *sensor, int centimeters, int spd) {
     uart_sendChar('7');
 }
 
-///Stop the bot by disabling its motors
+///
 /**
- * Set the wheels' power to 0.
+ * Stop the bot by disabling its motors
+ * @author Tanner Dempsay
+ * @date 4/16/2018
  */
 void stop() {
     oi_setWheels(0, 0);
 }
 
-///A check for objects detected by open interface.
+
 /**
- * Checks for left bumper, right bumper, and cliff sensors.
+ * Checks for left bumper, right bumper, cliff, and boundary sensors.
  * Run at the beginning of and during forward movement.
- *
+ * Returns char based on status of the sensors.
  * @param sensor - open interface sensor pointer
+ * @date 4/16/2018
+ * @author Tanner Dempsay
  */
 char checkAll(oi_t *sensor) {
     char status = 0;

@@ -1,8 +1,11 @@
-/*
- * pulse.c
+/** 
+ *@file pulse.c
+ *@brief this file allows for initializing and 
+ *send pulses and get distance via the pulse sensor.
  *
- *  Created on: Mar 7, 2018
- *      Author: tdempsay
+ *@author Tanner Dempsay
+ *
+ *@date 4/16/2018
  */
 #include "lcd.h"
 #include "String.h"
@@ -14,6 +17,11 @@
 volatile unsigned long last_time = 0, curr_time = 0;
 volatile int update_flag = 0;
 
+/**
+ * This method is the ISR for timer3B, captures edge times of pulses.
+ * @author Tanner Dempsay
+ * @date 4/16/2018
+ */
 void TIMER3B_Handler(void){
 
     if((TIMER3_MIS_R & TIMER_MIS_CBEMIS) != 0){ //checks interrupt flags
@@ -24,7 +32,11 @@ void TIMER3B_Handler(void){
    TIMER3_ICR_R |= TIMER_ICR_CBECINT; // 0x400;  //clears interrupt flag
 
 }
-
+/**
+ * Initializes pin B3 and timer3B for use with pulse sensor.
+ * @author Tanner Dempsay
+ * @date 4/16/2018
+ */
  void pulse_init(void){
       SYSCTL_RCGCGPIO_R |= 2;
       GPIO_PORTB_AFSEL_R |= 0x08;
@@ -50,7 +62,12 @@ void TIMER3B_Handler(void){
      TIMER3_CTL_R |= TIMER_CTL_TBEN;
  }
 
-
+/**
+ * Sends an output high signal to initialize a distance reading.
+ * @author Tanner Dempsay
+ * @date 4/16/2018
+ */
+ 
 void send_pulse(void){
     GPIO_PORTB_AFSEL_R &= ~8;
     GPIO_PORTB_DIR_R |= 0x08;// set PB3 as output
@@ -62,7 +79,12 @@ void send_pulse(void){
     GPIO_PORTB_AFSEL_R |= 8;
 
 }
-
+/**
+ * Returns the distance calculated by the pulse sensor
+ * in cm.
+ * @author Tanner Dempsay
+ * @date 4/16/2018
+ */
 unsigned long pulse_getDist(void){
 	
     unsigned long time_diff = 0;
@@ -84,7 +106,6 @@ unsigned long pulse_getDist(void){
           time_diff = ((unsigned long) overflow << 24) + curr_time-last_time;   //use overflow to correct time diff
       overflow += (curr_time < last_time);
 	  return cm;
-     // send_pulse();     //sent new pulse
       }
 
   }
