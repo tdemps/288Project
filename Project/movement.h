@@ -38,7 +38,7 @@ char checkAll(oi_t *sensor);
  * @param degrees - how far the bot will turn
  * @param speed - how fast to turn
  */
-void turn_ccw(oi_t *sensor, int degrees, int speed);
+int turn_ccw(oi_t *sensor, int degrees, int speed);
 
 ///Turn clockwise a certain number of degrees
 /**
@@ -48,7 +48,7 @@ void turn_ccw(oi_t *sensor, int degrees, int speed);
  * @param degrees - how far the bot will turn
  * @param speed - how fast to turn
  */
-void turn_cw(oi_t *sensor, int degrees, int speed);
+int turn_cw(oi_t *sensor, int degrees, int speed);
 
 ///Move in reverse a certain distance
 /**
@@ -62,7 +62,7 @@ void turn_cw(oi_t *sensor, int degrees, int speed);
  * @param centimeters - how far the bot will move backwards
  * @param spd - the speed at which the bot will move (speed of the motors)
  */
-void move_backward(oi_t *sensor, int centimeters, int speed);
+int move_backward(oi_t *sensor, int centimeters, int speed);
 
 ///Stop the bot by disabling its motors
 /**

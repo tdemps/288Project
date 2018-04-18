@@ -28,23 +28,23 @@ int sensors_CheckCliff(oi_t *sensor_data){
     //add uart controls here
     Cliff = 0;
     if(cliffFL && cliffFR){
-        uart_sendStr("Cliff Front Center\n\r");
+        uart_sendStr("Drop Center\n\r");
         Cliff = 1;
     }
     else if(cliffFL){
-        uart_sendStr("Cliff Front Left\n\r");
+        uart_sendStr("Drop Leftcenter\n\r");
         Cliff = 1;
     }
     else if(cliffFR){
-        uart_sendStr("Cliff Front Right\n\r");
+        uart_sendStr("Drop Rightcenter\n\r");
         Cliff = 1;
     }
     if(cliffL){
-        uart_sendStr("Cliff Left Side\n\r");
+        uart_sendStr("Drop Left\n\r");
         Cliff = 1;
     }
     if(cliffR){
-        uart_sendStr("Cliff Right Side\n\r");
+        uart_sendStr("Drop Right\n\r");
         Cliff = 1;
     }
     if(Cliff){
@@ -61,26 +61,27 @@ int sensors_CheckBorder(oi_t *sensor_data){
     int borderL = sensor_data->cliffLeftSignal;
     int borderR = sensor_data->cliffRightSignal;
     //add uart controls here
-    int tape = 1000;
+    int tape = 2770;
+    int range = 50;
 
     Boundary = 0;
-    if((closeTo(borderFL, tape, 100) == 1)  && (closeTo(borderFR, tape, 100) == 1)){
-        uart_sendStr("Border Front Center\n\r");
+    if((closeTo(borderFL, tape, range) == 1)  && (closeTo(borderFR, tape, range) == 1)){
+        uart_sendStr("Tape Center\n\r");
         Boundary = 1;
     }
-    else if(closeTo(borderFL, tape, 100) == 1){
-        uart_sendStr("Border Front Left\n\r");
+    else if(closeTo(borderFL, tape, range) == 1){
+        uart_sendStr("Tape Leftcenter\n\r");
         Boundary = 1;
-    }else if(closeTo(borderFR, tape, 100) == 1){
-        uart_sendStr("Border Front Right\n\r");
-        Boundary = 1;
-    }
-    if(closeTo(borderL, tape, 100) == 1){
-        uart_sendStr("Border Left Side\n\r");
+    }else if(closeTo(borderFR, tape, range) == 1){
+        uart_sendStr("Tape Rightcenter\n\r");
         Boundary = 1;
     }
-    if(closeTo(borderR, tape, 100) == 1){
-        uart_sendStr("Border Right Side\n\r");
+    if(closeTo(borderL, tape, range) == 1){
+        uart_sendStr("Tape Left\n\r");
+        Boundary = 1;
+    }
+    if(closeTo(borderR, tape, range) == 1){
+        uart_sendStr("Tape Right\n\r");
         Boundary = 1;
     }
     if(Boundary){

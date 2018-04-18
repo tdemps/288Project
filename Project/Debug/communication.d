@@ -9,19 +9,14 @@ communication.obj: C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stri
 communication.obj: C:/ti/TivaWare_C_Series-2.1.2.111/inc/tm4c123gh6pm.h
 communication.obj: ../timer.h
 communication.obj: C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdint.h
-communication.obj: ../pulse.h
+communication.obj: ../servo.h
 communication.obj: C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdio.h
 communication.obj: C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/string.h
 communication.obj: U:/Better\ Labs/TannerMitchRob\ Labs/Project/lcd.h
 communication.obj: C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdio.h
 communication.obj: C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/string.h
-communication.obj: C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdbool.h
-communication.obj: C:/ti/TivaWare_C_Series-2.1.2.111/driverlib/interrupt.h
-communication.obj: ../ir.h
-communication.obj: ../servo.h
-communication.obj: C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdio.h
-communication.obj: C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/string.h
 communication.obj: ../button.h
+communication.obj: C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdbool.h
 communication.obj: ../uart.h
 communication.obj: ../WiFi.h
 communication.obj: C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/string.h
@@ -45,19 +40,14 @@ C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/string.h:
 C:/ti/TivaWare_C_Series-2.1.2.111/inc/tm4c123gh6pm.h: 
 ../timer.h: 
 C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdint.h: 
-../pulse.h: 
+../servo.h: 
 C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdio.h: 
 C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/string.h: 
 U:/Better\ Labs/TannerMitchRob\ Labs/Project/lcd.h: 
 C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdio.h: 
 C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/string.h: 
-C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdbool.h: 
-C:/ti/TivaWare_C_Series-2.1.2.111/driverlib/interrupt.h: 
-../ir.h: 
-../servo.h: 
-C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdio.h: 
-C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/string.h: 
 ../button.h: 
+C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdbool.h: 
 ../uart.h: 
 ../WiFi.h: 
 C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/string.h: 

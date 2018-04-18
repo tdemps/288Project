@@ -36,7 +36,6 @@ main.obj: C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/_defs.h
 main.obj: U:/Better\ Labs/TannerMitchRob\ Labs/Project/communication.h
 main.obj: C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdio.h
 main.obj: C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/string.h
-main.obj: U:/Better\ Labs/TannerMitchRob\ Labs/Project/ir.h
 main.obj: U:/Better\ Labs/TannerMitchRob\ Labs/Project/movement.h
 main.obj: U:/Better\ Labs/TannerMitchRob\ Labs/Project/sensors.h
 main.obj: U:/Better\ Labs/TannerMitchRob\ Labs/Project/entertainment.h
@@ -82,7 +81,6 @@ C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/_defs.h:
 U:/Better\ Labs/TannerMitchRob\ Labs/Project/communication.h: 
 C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdio.h: 
 C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/string.h: 
-U:/Better\ Labs/TannerMitchRob\ Labs/Project/ir.h: 
 U:/Better\ Labs/TannerMitchRob\ Labs/Project/movement.h: 
 U:/Better\ Labs/TannerMitchRob\ Labs/Project/sensors.h: 
 U:/Better\ Labs/TannerMitchRob\ Labs/Project/entertainment.h: 

@@ -23,7 +23,7 @@ void initAll(){
 	servo_init();
 	uart_init();
 
-	uart_sendStr("Setup complete \n");
 	
+
 	return;
 }

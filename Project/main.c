@@ -24,7 +24,7 @@ int main(void){
 	oi_t *sensor = oi_alloc();
 	oi_init(sensor);
 	init_Songs();
-	
+	uart_sendStr("Setup complete \n");
 
 	lcd_printf("entering main");
 	while(1){
@@ -33,6 +33,7 @@ int main(void){
 	if(input == '7'){
 		
 		flash_leds();
+		playSong(0);
 		break;
 	}
 	

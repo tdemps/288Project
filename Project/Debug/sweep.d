@@ -28,6 +28,10 @@ sweep.obj: C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/string.h
 sweep.obj: ../uart.h
 sweep.obj: C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/math.h
 sweep.obj: C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/_defs.h
+sweep.obj: U:/Better\ Labs/TannerMitchRob\ Labs/Project/sweep.h
+sweep.obj: C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdio.h
+sweep.obj: C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/string.h
+sweep.obj: U:/Better\ Labs/TannerMitchRob\ Labs/Project/ir.h
 
 ../sweep.c: 
 ../sweep.h: 
@@ -57,3 +61,7 @@ C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/string.h:
 ../uart.h: 
 C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/math.h: 
 C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/_defs.h: 
+U:/Better\ Labs/TannerMitchRob\ Labs/Project/sweep.h: 
+C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdio.h: 
+C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/string.h: 
+U:/Better\ Labs/TannerMitchRob\ Labs/Project/ir.h: 
