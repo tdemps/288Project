@@ -7,18 +7,20 @@
  *
  *@date 4/16/2018
  */
-#include <stdio.h>
-#include <string.h>
-#include <inc/tm4c123gh6pm.h>
-#include "timer.h"
-#include "servo.h"
-#include <stdbool.h>
-#include "uart.h"
-#include <movement.h>
-#include <entertainment.h>
 
 #ifndef COMMUNICATION_H_
 #define COMMUNICATION_H_
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+#include <inc/tm4c123gh6pm.h>
+#include <uart.h>
+#include <movement.h>
+#include <entertainment.h>
+#include <sweep.h>
+#include <ir.h>
+#include <lcd.h>
+
 
 /**
  * Input sent over UART is processed as a single char and switch executes intended function

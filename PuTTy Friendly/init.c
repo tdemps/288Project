@@ -16,14 +16,12 @@
  * @date 4/16/2018
  */
 void initAll(){
-	lcd_init();
 
+	lcd_init();
 	ADC_init();
 	pulse_init();
 	servo_init();
 	uart_init();
-
-	
 
 	return;
 }

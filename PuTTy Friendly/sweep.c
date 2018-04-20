@@ -6,7 +6,6 @@
  */
 
 #include "sweep.h"
-#include <stdbool.h>
 #include <math.h>
 #include <sweep.h>
 
@@ -29,25 +28,27 @@ int sweep(void){
         if(pulseVal > 80) pulseVal = 80;  //cap sensor values to 80cm
         if(irVal > 80) irVal = 80;
 		
-		if( ( ( abs(lastIr-irVal) > 15 && abs(pulseVal - lastPulse) > 10) || (lastIr < 70 && irVal < 70) ) && !flag){   //first edge of object
+		//if( ( ( abs(lastIr-irVal) > 15 && abs(pulseVal - lastPulse) > 15) || (lastIr < 70 && irVal < 70) ) && !flag){
+        if( ( ((lastPulse-pulseVal) > 15 && irVal < 79) || (lastIr < 75 && irVal < 75) ) && !flag){//first edge of object
 			startAng = servoAngle;
 			flag++;
 		}
 
 		if(pulseVal > 79 && lastPulse > 79  && irVal > 79 && lastIr > 79 && flag) flag = 0;    //if first edge detection was a mistake
 		
-		if(flag && ( (irVal > 79) || ( pulseVal > lastPulse+20 ) ) ){  //if second edge detected
+		if(flag && ( (irVal > 79) || ( pulseVal > lastPulse+30 ) ) ){  //if second edge detected
 		    endAng = servoAngle;
 			objDist[i] = lastPulse;
 			objWidth[i] = tan( (double) (endAng-startAng) * 3.14159/360) * objDist[i]*2;    //width calculation
 			objAngs[i] = (int) ((endAng+startAng) / 2);
 			flag = 0;
-			sendInfo(objAngs[i],objDist[i],objWidth[i]);
+			if(objWidth[i] > 0)
+			    sendInfo(objAngs[i],objDist[i],objWidth[i]);
 			i++;
 		}
-        //lcd_printf("IR: %d \n Pulse: %lu \n Angle: %d \n Objs: %d   Flag: %d", irVal, pulseVal, servoAngle, i, flag);
+        lcd_printf("Angle: %d \n Flag: %d",servoAngle, flag);
 
-		sprintf(str, "%-20d %-20d %-20lu %-20d \r\n", servoAngle, irVal, pulseVal, flag); //string to send to putty
+		sprintf(str, "%-15d %-20d %-15lu %-15d \r\n", servoAngle, irVal, pulseVal, flag); //string to send to putty
 	    uart_sendStr(str);
 		lastPulse = pulseVal;   //keep current distance for next loop
 		lastIr = irVal;
@@ -65,7 +66,6 @@ void sendInfo(int deg, int distance, int width){
 	
 	char str[50];
 	sprintf(str, "object %d %d %d \r\n", width, distance, deg);
-	//uart_sendChar('\r');
 	uart_sendStr(str);
 	
 }

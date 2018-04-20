@@ -1,6 +1,5 @@
-#include "lcd.h"
-#include "math.h"
-#include "String.h"
+
+#include <ir.h>
 
 void ADC_init(){
     SYSCTL_RCGCGPIO_R |= 2;
@@ -42,16 +41,16 @@ unsigned ADC_read(){
 int ir_getDist(){
 	
     int i = 0, average = 0;
-   // while(1 == 1){
-        average = 0;
+
         for(i = 0; i < 20; i++){
-        average += ADC_read();      //smooth raw value by averaging n values
+
+        average += ADC_read();
+        //lcd_printf("%lu", ADC_read());//smooth raw value by averaging n values
         timer_waitMicros(500);
         }
-        //average = ADC_read();
+
         average = average / 20;
 
-        return  (69.369 * exp( average *-0.0014 ));//convert to cm using trend line on excel (exponential)
-   // }
+        return  (69.369 * exp( average *-0.0014 )); //convert to cm using trend line on excel (exponential)
 
 }

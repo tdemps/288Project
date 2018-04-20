@@ -29,7 +29,7 @@ void servo_init(void){
     TIMER1_TBILR_R = 0xE200; //good
 
 	
-	TIMER1_TBMATCHR_R = 22550;  //initial angle is 90, 37356
+	TIMER1_TBMATCHR_R = 22300;  //initial angle is 90, 37356
     TIMER1_TBPMR_R = 0x4;
 	
     TIMER1_CTL_R |= 0x100;

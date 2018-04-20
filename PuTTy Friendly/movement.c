@@ -27,7 +27,8 @@
  */
 char move_forward(oi_t *sensor, int centimeters, int spd) {
 	//chack sensors on bot
-	oi_update(sensor);
+    char str10[15];
+    oi_update(sensor);
     if (checkAll(sensor)) {
 		uart_sendStr("Fwd Movement Blocked \n\r");
         return 1;
@@ -44,6 +45,8 @@ char move_forward(oi_t *sensor, int centimeters, int spd) {
 		
         if(test){
             uart_sendStr("Fwd Movement Stopped \n\r");
+            sprintf(str10, "move %d \n", sum/10);
+            uart_sendStr(str10);
             stop();
             return test;
 		}
@@ -52,8 +55,8 @@ char move_forward(oi_t *sensor, int centimeters, int spd) {
     }
 
     stop();
-    uart_sendStr("Fwd Movement Complete \n\r");
-	//uart_sendStr("move 1 \n");
+    //uart_sendStr("Fwd Movement Complete \n\r");
+	uart_sendStr("move 10 \n");
     return test;
 }
 
@@ -73,15 +76,17 @@ int turn_ccw(oi_t *sensor, int degrees, int speed) {
     oi_setWheels(speed, -speed); // move forward;
 
     while (sum < degrees) {
-        oi_update(sensor);
-        sum += sensor->angle;
+       // oi_update(sensor);
+       // sum += sensor->angle;
+        timer_waitMillis(36);
+        sum++;
     }
 
     stop();
-    uart_sendStr("CCW Turn Complete \n\r");
-	//uart_sendStr("angle -1 \n");
-	
-	return -1;
+    //uart_sendStr("CCW Turn Complete \n\r");
+	uart_sendStr("angle -10 \n");
+
+	return -degrees;
 }
 
 /**
@@ -105,9 +110,10 @@ int turn_cw(oi_t *sensor, int degrees, int speed) {
     }
 
     stop();
-    uart_sendStr("CW Turn Complete \n\r");
-	//uart_sendStr("angle 1 \n");
-	return 1;
+    //uart_sendStr("CW Turn Complete \n\r");
+	uart_sendStr("angle 10 \n");
+
+	return degrees;
 }
 
 ///Move in reverse a certain distance
@@ -132,15 +138,15 @@ int move_backward(oi_t *sensor, int centimeters, int spd) {
         oi_update(sensor);
         sum += sensor->distance;
 
-        if (sensors_CheckBorder(sensor)) {
-            break;
-        }
+       // if (sensors_CheckBorder(sensor)) {
+      //      break;
+      //  }
     }
 
     stop();
-	//uart_sendStr("move -1 \n");
+	uart_sendStr("move -10 \n");
     //uart_sendChar('7');
-	return -1;
+	return -centimeters;
 }
 
 ///
@@ -164,7 +170,7 @@ void stop() {
  */
 char checkAll(oi_t *sensor) {
     char status = 0;
-    char string[15];
+    char string[20];
 	
 	if (sensor->bumpLeft && sensor->bumpRight) {
 		    status = '9';
