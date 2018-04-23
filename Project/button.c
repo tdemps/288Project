@@ -108,7 +108,7 @@ uint8_t button_getButton() {
 	        return 1;
 	}
 
-	return 0; // REPLACE ME
+	return 0; 
 }
 
 uint8_t button_getButtonBlocking() {
