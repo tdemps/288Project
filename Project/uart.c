@@ -63,8 +63,9 @@ void uart_sendChar(char data){
  */
 int uart_receive(void){
     char data = 0;
-
+    
     while(UART1_FR_R & UART_FR_RXFE){
+      //waiting
     }
     data = (char) (UART1_DR_R & 0xFF);
     return data;
