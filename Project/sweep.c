@@ -8,10 +8,10 @@
  *@date 4/20/2018
  */
 
-#include "sweep.h"
 #include <math.h>
 #include <sweep.h>
 
+///scans for objects in front of cyBot
 /**
  * Performs a 180 degree sweep with the servo,
  * scanning for objects with the IR and pulse sensors.
@@ -22,12 +22,12 @@ int sweep(void){
     unsigned long pulseVal;
     int irVal = 0, servoAngle = 0, dir = 1, flag = 0, startAng = 0, endAng = 0, lastPulse = 90, i = 0, lastIr = 90;
     int objDist[10] = {0,0,0,0,0}, objWidth[10] = {0,0,0,0,0}, objAngs[10] = {0,0,0,0,0};
-	char str[100];
-    uart_sendChar('\r'); uart_sendChar('\n');
+    char str[100];
+    uart_sendStr("\r\n");
     uart_sendStr("Beginning sweep \r\n");
     timer_waitMillis(500);
-	//sprintf(str, "%-20s %-20s %-20s \n \n", "Degrees", "IR Distance (cm)", "Sonar Distance (cm)");
-	//uart_sendStr(str);
+    //sprintf(str, "%-20s %-20s %-20s \n \n", "Degrees", "IR Distance (cm)", "Sonar Distance (cm)");
+    //uart_sendStr(str);
 
     while(servoAngle <= 180 && servoAngle >= 0){
         irVal = ir_getDist()*2;
@@ -52,24 +52,24 @@ int sweep(void){
 			flag = 0;
 			if(objWidth[i] > 0)
 			    sendInfo(objAngs[i],objDist[i],objWidth[i]);
-			i++;
+			i++;	//object count
 		}
-        lcd_printf("Angle: %d \n Flag: %d",servoAngle, flag);
+        lcd_printf("Angle: %d \n Flag: %d",servoAngle, flag);	//for debugging
 
-		sprintf(str, "%-15d %-20d %-15lu %-15d \r\n", servoAngle, irVal, pulseVal, flag); //string to send to putty
+		sprintf(str, "%-15d %-20d %-15lu %-15d \r\n", servoAngle, irVal, pulseVal, flag); //sends raw distance data to putty
 	    uart_sendStr(str);
-		lastPulse = pulseVal;   //keep current distance for next loop
+		lastPulse = pulseVal;   //keep current distances for next loop
 		lastIr = irVal;
         timer_waitMillis(75);
         servo_moveServo(1, dir);    //increment servo
-        servoAngle = servo_getAngle();
+        servoAngle = servo_getAngle();	//update angle
     }
 
-    servo_moveServo(180, -1);    //move to smallest object
+    servo_moveServo(180, -1);    //reset servo for next sweep
 
     return 0;
 }
-
+///sends found object info to host
 /**
   * Sends object info over UART connection via
   * string with format "object width distance degree".
