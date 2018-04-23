@@ -13,13 +13,14 @@
 #include <string.h>
 #include <inc/tm4c123gh6pm.h>
 #include <lcd.h>
-#include "timer.h"
-#include "pulse.h"
-#include "ir.h"
-#include "servo.h"
+#include <Timer.h>
+#include <pulse.h>
+#include <ir.h>
+#include <servo.h>
 #include <stdbool.h>
-#include "uart.h"
+#include <uart.h>
 
+///scans for objects in front of cyBot
 /**
  * Performs a 180 degree sweep with the servo,
  * scanning for objects with the IR and pulse sensors.
@@ -27,10 +28,10 @@
  */
 int sweep(void);
 
+///sends found object info to host
 /**
   * Sends object info over UART connection via
   * string with format "object width distance degree".
-  *
   */
 void sendInfo(int deg, int distance, int width);
 
