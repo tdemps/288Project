@@ -20,6 +20,11 @@ int closeTo(int value, int target, int range){
     }
 }
 
+/**
+ * Function used to check the sensors on the bottom of the robot for drops in the floor
+ * @param - sensor_data: data received from sensors with regards to the robot and the floor
+ *
+ */
 int sensors_CheckCliff(oi_t *sensor_data){
     int cliffFL = sensor_data->cliffFrontLeft;
     int cliffFR = sensor_data->cliffFrontRight;
@@ -51,10 +56,14 @@ int sensors_CheckCliff(oi_t *sensor_data){
         return 1;
     }
     else{
-        return 0;
+        return 0; //if no cliff is detected the function will return 0
     }
 }
 
+/**
+ * Function used to detect if the robot is on one of the boundries of tape
+ * @param - sensor_data: data received from the sensors on the bottom of the robot to detect the tape
+ */
 int sensors_CheckBorder(oi_t *sensor_data){
     int borderFL = sensor_data->cliffFrontLeftSignal;
     int borderFR = sensor_data->cliffFrontRightSignal;
@@ -88,7 +97,7 @@ int sensors_CheckBorder(oi_t *sensor_data){
         return 1;
     }
     else{
-        return 0;
+        return 0; //if no boundry is detected the function will return 0
     }
 }
 
