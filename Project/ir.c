@@ -18,6 +18,8 @@
  *
  */
 void ADC_init(){
+	
+    //set-up of the registers necessary for ADC (enable , alt funct, etc)
     SYSCTL_RCGCGPIO_R |= 2;
     SYSCTL_RCGCADC_R |= 1;
     GPIO_PORTB_AFSEL_R |= 16;
@@ -76,7 +78,7 @@ int ir_getDist(){
         timer_waitMicros(250);
         }
 
-        average = average / 20;
+        average = average / 20; 
 
         return  (69.369 * exp( average *-0.0014 )); //convert to cm using trend line on excel (exponential)
 
