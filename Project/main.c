@@ -14,11 +14,12 @@
 
 int main(void){
 
-    initAll();
+    initAll(); //initializes all required elements for the project
     timer_waitMillis(500);
 
 	char input = 0;
 
+	//setting up the open interface for the bot
 	oi_t *sensor = oi_alloc();
 	oi_init(sensor);
 	init_Songs();
