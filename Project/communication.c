@@ -10,8 +10,9 @@
  *@date 4/16/2018
  */
  
- int spdL = 50, spdH = 180;
-char lock = 0;
+
+ int spdL = 50, spdH = 180; //variables used in correlation to the bots speed in given direction
+char lock = 0; //variable that was used as a flag to check whether the bot was locked or not
 
 ///program reads in a char and executes assigned bot function
 /**
