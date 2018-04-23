@@ -1,18 +1,23 @@
-/*
- * servo.c
+/** 
+ *@file servo.h
+ *@brief this file's methods allow for controlling
+ * the onboard servo motor.
  *
- *  Created on: Mar 21, 2018
- *      Author: tdempsay
+ *@author Big Bird
+ *
+ *@date 4/16/2018
  */
+ 
+#include <servo.h>
 
-#include "lcd.h"
-#include "String.h"
-#include "Timer.h"
-#include "stdlib.h"
-#include <stdbool.h>
-#include "button.h"
+int angle = 0; //Current angle of servo
 
-int angle = 0;
+/**
+  * Initializes pin PB5 for use with servo motor.
+  * Sets up TIMER1B for PWM output.
+  *
+  */
+  
 void servo_init(void){
     SYSCTL_RCGCGPIO_R |= 2;
     GPIO_PORTB_AFSEL_R |= 0x20;
@@ -29,19 +34,28 @@ void servo_init(void){
     TIMER1_TBILR_R = 0xE200; //good
 
 	
-	TIMER1_TBMATCHR_R = 23000;  //initial angle is 90, 37356
+	TIMER1_TBMATCHR_R = 22300;  //initial angle is 90, 37356
     TIMER1_TBPMR_R = 0x4;
 	
     TIMER1_CTL_R |= 0x100;
 }
 
+/**
+  * Returns current angle of servo in degrees.
+  *
+  */
+
 int servo_getAngle(void){
 	return angle;
 }
 
+/**
+  * Moves the servo certain number of degrees.
+  * dir > 1 for clockwise, < 1 for counterclockwise
+  *
+  */
 void servo_moveServo(int degrees, int dir){
    //unsigned int pwm_period = 320,000
-   // uint8_t button = 0;
    // int dir = 1;    //changes direction
    
     angle += degrees * dir;  //current position in degrees

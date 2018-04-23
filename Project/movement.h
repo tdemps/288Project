@@ -1,52 +1,52 @@
 #include "open_interface.h"
-//#include "cliffSensor.h"
 #include "uart.h"
 #include <sensors.h>
 
-//Preset speeds
 
-///Move forward a certain distance
+///moves the robot forward safely
 /**
+ * Moves the bot forward a certain distance at a set speed.
+ * Checks front sensors every cm while moving and before movement.
  * @param sensor - open interface sensor pointer
- * @param centimeters - how far the bot will travel before stopping
- * @param spd - speed, how fast the motors will turn
+ * @param centimeters - how far the bot will travel forward
+ * @param spd - speed, how fast the wheels will turn
  *
- * Sends a char to UART, 0 - 4, depending on if the bot encountered anything while moving.
- *
- * Return 0 if clear.
- * Return 1 if left bumper hit.
- * Return 2 if right bumper hit.
- * Return 3 if bot is in front of a cliff.
- * Return 4 if bot hit the boundary.
+ * Returns a nonzero char, depending on if the bot encountered anything while moving, 0 otherwise.
+ * 
  */
 char move_forward(oi_t *sensor, int centimeters, int speed);
 
-///A check of all obstacles detectable by the open interface.
+///checks all front sensors.
 /**
- * Checks for left bumper, right bumper, and cliff sensors.
- * Run at the beginning of forward movement as an initial check.
- *
+ * Checks left bumper, right bumper, cliff, and boundary sensors.
+ * Run at the beginning of and during forward movement.
+ * Returns char based on status of the sensors.
  * @param sensor - open interface sensor pointer
+ * 
  */
 char checkAll(oi_t *sensor);
 
-///Turn counterclockwise a certain number of degrees
+///turns bot counterclockwise by a number of degrees
 /**
- * The wheels are set to turn in opposite directions to cause the turn.
+ * Turn the bot counterclockwise a certain amount and speed.
+ * Sends string via UART to confirm complete turn is finished.
  *
  * @param sensor - an open interface sensor pointer
  * @param degrees - how far the bot will turn
  * @param speed - how fast to turn
+ *
  */
 int turn_ccw(oi_t *sensor, int degrees, int speed);
 
-///Turn clockwise a certain number of degrees
+///Turns bot clockwise a certain number of degrees
 /**
- * The wheels are set to turn in opposite directions to cause the turn.
+ * Turn the bot clockwise a certain amount and speed.
+ * Sends string via UART to confirm complete turn is finished.
  *
  * @param sensor - an open interface sensor pointer
  * @param degrees - how far the bot will turn
  * @param speed - how fast to turn
+ *
  */
 int turn_cw(oi_t *sensor, int degrees, int speed);
 
@@ -54,18 +54,18 @@ int turn_cw(oi_t *sensor, int degrees, int speed);
 /**
  *
  * Similar to the function for moving forward.
- * While moving back, the cliff signals are checked to make sure the bot doesn't accidentally back up over the boundary.
- * Sends a 7 through UART to let the driver know the reverse completed successfully.
- * Sends a 4 if the boundary was hit.
+ * Sends string via UART when backwards movement is complete.
  *
  * @param sensor - an open interface sensor pointer
  * @param centimeters - how far the bot will move backwards
- * @param spd - the speed at which the bot will move (speed of the motors)
+ * @param spd - the speed at which the bot will move (speed of the wheels)
+ * 
  */
 int move_backward(oi_t *sensor, int centimeters, int speed);
 
-///Stop the bot by disabling its motors
+///stops wheels
 /**
- * Set the wheels' power to 0.
+ * Stop the bot by disabling its motors.
+ *
  */
 void stop();

@@ -9,14 +9,11 @@
  */
 
 #include "uart.h"
-#include "WiFi.h"
-#include "String.h"
 
   
 /**
  * This method enables the required pins for UART1 functionality.
- * @author Tanner Dempsay
- * @date 4/16/2018
+ *
  */
 void uart_init(void){
     //enable clock to GPIO, R1 = port B
@@ -49,8 +46,7 @@ void uart_init(void){
 /**
  * This method sends a single character over uart.
  * @author Tanner Dempsay
- * @param data  The character to be sent 
- * @date 4/16/2018
+ * @param data The character to be sent 
  * 
  */
 void uart_sendChar(char data){
@@ -63,16 +59,12 @@ void uart_sendChar(char data){
 
 /**
  * This method waits to receive a single character over uart.
- * @author Tanner Dempsay
- * @date 4/16/2018
- * 
+ *
  */
 int uart_receive(void){
     char data = 0;
 
     while(UART1_FR_R & UART_FR_RXFE){
-//        if(button_getButton() > 0)
-//            return 0;
     }
     data = (char) (UART1_DR_R & 0xFF);
     return data;
@@ -82,11 +74,11 @@ int uart_receive(void){
  * This method sends a string of chars over the uart.
  * @author Tanner Dempsay
  * @param char *data  String of chars to transmit
- * @date 4/16/2018
+ *
  */
 void uart_sendStr(const char *data){
 
-    int i,j;
+    int j;
     j = 0;
     while(j < strlen(data)) {
 

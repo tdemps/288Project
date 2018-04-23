@@ -7,8 +7,8 @@ WiFi.obj: C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/string.h
 WiFi.obj: C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/linkage.h
 WiFi.obj: C:/ti/TivaWare_C_Series-2.1.2.111/inc/tm4c123gh6pm.h
 WiFi.obj: ../uart.h
-WiFi.obj: ../Timer.h
-WiFi.obj: ../WiFi.h
+WiFi.obj: U:/Better\ Labs/TannerMitchRob\ Labs/Project/Timer.h
+WiFi.obj: U:/Better\ Labs/TannerMitchRob\ Labs/Project/WiFi.h
 
 ../WiFi.c: 
 ../WiFi.h: 
@@ -17,5 +17,5 @@ C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/string.h:
 C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/linkage.h: 
 C:/ti/TivaWare_C_Series-2.1.2.111/inc/tm4c123gh6pm.h: 
 ../uart.h: 
-../Timer.h: 
-../WiFi.h: 
+U:/Better\ Labs/TannerMitchRob\ Labs/Project/Timer.h: 
+U:/Better\ Labs/TannerMitchRob\ Labs/Project/WiFi.h: 

@@ -1,7 +1,22 @@
-#include "lcd.h"
-#include "math.h"
-#include "String.h"
+/** 
+ *@file ir.c
+ *@brief this file contains methods for measuring
+ * distance with the ir sensor
+ *the cyBot.
+ *
+ *@author Tanner Dempsay
+ *
+ *@date 4/20/2018
+ */
+ 
+#include <ir.h>
 
+///sets up IR sensor components
+/**
+ * Initializes Pin PB4 for ADC0 and AIN10 for sampling
+ * the IR sensors output.
+ *
+ */
 void ADC_init(){
     SYSCTL_RCGCGPIO_R |= 2;
     SYSCTL_RCGCADC_R |= 1;
@@ -25,7 +40,12 @@ void ADC_init(){
     //ADC0_PSSI_R = ADC_PSSI_SS1;
 }
 
-
+///returns digital value from IR sensor
+/**
+ * Starts ADC conversion and waits for value to be received, returns
+ * digital value processed by ADC0.
+ *
+ */
 unsigned ADC_read(){
     //initiate SS1 conversion
     ADC0_PSSI_R=ADC_PSSI_SS0;
@@ -39,19 +59,25 @@ unsigned ADC_read(){
     return value;
 }
 
+///returns object distance from IR in cm.
+/**
+ * Reads 20 values from IR sensor and averages them, then
+ * converts digital value to centimeters.
+ *
+ */
 int ir_getDist(){
 	
     int i = 0, average = 0;
-   // while(1 == 1){
-        average = 0;
+
         for(i = 0; i < 20; i++){
-        average += ADC_read();      //smooth raw value by averaging n values
-        timer_waitMicros(500);
+
+        average += ADC_read();
+        lcd_printf("%lu", ADC_read());//smooth raw value by averaging n values
+        timer_waitMicros(250);
         }
-        //average = ADC_read();
+
         average = average / 20;
 
-        return  (69.369 * exp( average *-0.0014 ));//convert to cm using trend line on excel (exponential)
-   // }
+        return  (69.369 * exp( average *-0.0014 )); //convert to cm using trend line on excel (exponential)
 
 }

@@ -7,35 +7,31 @@
  *
  *@date 4/16/2018
  */
-#include "lcd.h"
-#include "String.h"
-#include "Timer.h"
-#include "stdlib.h"
-#include <stdbool.h>
-#include "C:/ti/TivaWare_C_Series-2.1.2.111/driverlib/interrupt.h"
 
-volatile unsigned long last_time = 0, curr_time = 0;
-volatile int update_flag = 0;
+#include <pulse.h>
 
+volatile unsigned long last_time = 0, curr_time = 0; //timer values at edges
+volatile int update_flag = 0;	//status variable
+
+///handles edge events
 /**
- * This method is the ISR for timer3B, captures edge times of pulses.
- * @author Tanner Dempsay
- * @date 4/16/2018
+ * This method is the ISR for timer3B, captures timer values
+ * at edges of pulse and resets interrupt flag.
  */
 void TIMER3B_Handler(void){
 
     if((TIMER3_MIS_R & TIMER_MIS_CBEMIS) != 0){ //checks interrupt flags
-    last_time = curr_time;  //keeps current and last recorded time
-    curr_time= TIMER3_TBR_R;
-    update_flag += 1;       //updates state
+		last_time = curr_time;  //keeps current and last recorded time
+		curr_time= TIMER3_TBR_R;
+		update_flag += 1;       //updates state
     }
    TIMER3_ICR_R |= TIMER_ICR_CBECINT; // 0x400;  //clears interrupt flag
 
 }
+///Initializes pulse sensor with timer3B
 /**
- * Initializes pin B3 and timer3B for use with pulse sensor.
- * @author Tanner Dempsay
- * @date 4/16/2018
+ * Initializes pin B3 and timer3B for use with pulse sensor. 
+ * Timer captures edges of pulse sensor ouptut.
  */
  void pulse_init(void){
       SYSCTL_RCGCGPIO_R |= 2;
@@ -61,13 +57,11 @@ void TIMER3B_Handler(void){
      IntMasterEnable();
      TIMER3_CTL_R |= TIMER_CTL_TBEN;
  }
-
+///starts pulse reading of distance.
 /**
- * Sends an output high signal to initialize a distance reading.
- * @author Tanner Dempsay
- * @date 4/16/2018
+ * Sends an output high signal to PB3 (pulse sensor) initialize a distance reading.
+ *Sets PB3 to input afterwards. 
  */
- 
 void send_pulse(void){
     GPIO_PORTB_AFSEL_R &= ~8;
     GPIO_PORTB_DIR_R |= 0x08;// set PB3 as output
@@ -79,11 +73,11 @@ void send_pulse(void){
     GPIO_PORTB_AFSEL_R |= 8;
 
 }
+///returns object distance using pulse sensor.
 /**
- * Returns the distance calculated by the pulse sensor
+ * Initializes a pulse and waits for receiving pulse.
+ * Computes and returns the distance of object in cm.
  * in cm.
- * @author Tanner Dempsay
- * @date 4/16/2018
  */
 unsigned long pulse_getDist(void){
 	

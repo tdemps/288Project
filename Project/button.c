@@ -55,7 +55,6 @@ uint8_t button_checkButtons() {
  */
 uint8_t button_getButton() {
 
-	#warning "Unimplemented function: uint8_t button_getButton(void)"	// delete warning after implementing
 
 	//
 	// DELETE ME - How bitmasking works
