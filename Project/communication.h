@@ -1,25 +1,34 @@
-/*
- * communication.h
+/** 
+ *@file communication.h
+ *@brief this file's function is responsible for handling
+ *data received from the host computer.
  *
- *  Created on: Apr 15, 2018
- *      Author: tdempsay
+ *@author Tanner Dempsay
+ *
+ *@date 4/16/2018
  */
-#include <stdio.h>
-#include <string.h>
-#include <inc/tm4c123gh6pm.h>
-#include "timer.h"
-#include "pulse.h"
-#include "ir.h"
-#include "servo.h"
-#include <stdbool.h>
-#include "uart.h"
-#include <movement.h>
-#include <entertainment.h>
 
 #ifndef COMMUNICATION_H_
 #define COMMUNICATION_H_
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+#include <inc/tm4c123gh6pm.h>
+#include <uart.h>
+#include <movement.h>
+#include <entertainment.h>
+#include <sweep.h>
+#include <ir.h>
+#include <lcd.h>
 
-
+///program reads in a char and executes assigned bot function
+/**
+ * Input sent over UART is processed as a single char and switch executes intended function
+ * Driver can move forward/backward, perform left/right turns, scan, play music, and change wheel speed.
+ *
+ *@param sensor, open interace object containing status of bot sensors
+ *
+ */
 char comCheck(oi_t *sensor);
 
 

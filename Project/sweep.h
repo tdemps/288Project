@@ -19,10 +19,19 @@
 #include "servo.h"
 #include <stdbool.h>
 #include "uart.h"
-#include "WiFi.h"
-//#include "C:/ti/TivaWare_C_Series-2.1.2.111/driverlib/interrupt.h"
 
-
+/**
+ * Performs a 180 degree sweep with the servo,
+ * scanning for objects with the IR and pulse sensors.
+ * Returns 0 once complete.
+ */
 int sweep(void);
+
+/**
+  * Sends object info over UART connection via
+  * string with format "object width distance degree".
+  *
+  */
+void sendInfo(int deg, int distance, int width);
 
 #endif /* SWEEP_H_ */

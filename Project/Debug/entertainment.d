@@ -16,9 +16,9 @@ entertainment.obj: ../lcd.h
 entertainment.obj: C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdio.h
 entertainment.obj: C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/string.h
 entertainment.obj: ../uart.h
-entertainment.obj: ../WiFi.h
+entertainment.obj: U:/Better\ Labs/TannerMitchRob\ Labs/Project/WiFi.h
 entertainment.obj: C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/string.h
-entertainment.obj: ../uart.h
+entertainment.obj: U:/Better\ Labs/TannerMitchRob\ Labs/Project/uart.h
 
 ../entertainment.c: 
 ../open_interface.h: 
@@ -36,6 +36,6 @@ C:/ti/TivaWare_C_Series-2.1.2.111/inc/tm4c123gh6pm.h:
 C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdio.h: 
 C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/string.h: 
 ../uart.h: 
-../WiFi.h: 
+U:/Better\ Labs/TannerMitchRob\ Labs/Project/WiFi.h: 
 C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/string.h: 
-../uart.h: 
+U:/Better\ Labs/TannerMitchRob\ Labs/Project/uart.h: 

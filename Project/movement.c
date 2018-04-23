@@ -1,33 +1,47 @@
+/** 
+ *@file movement.c
+ *@brief this file contains methods for moving
+ *the cyBot.
+ *
+ *@author Tanner Dempsay
+ *
+ *@date 4/16/2018
+ */
+
 #include "movement.h"
 
-//Calibration constants - change during tests of different bots
+//Calibration constants for wheels
 #define CALIB_L 0
 #define CALIB_R 0
 
-///Move forward a certain distance
+///moves the robot forward safely
 /**
+ * Moves the bot forward a certain distance at a set speed.
+ * Checks front sensors every cm while moving and before movement.
  * @param sensor - open interface sensor pointer
- * @param centimeters - how far the bot will travel before stopping
- * @param spd - speed, how fast the motors will turn
+ * @param centimeters - how far the bot will travel forward
+ * @param spd - speed, how fast the wheels will turn
  *
- * Sends a char to UART, 0 - 4, depending on if the bot encountered anything while moving.
- *
- * Return 0 if clear.
- * Return 1 if left bumper hit.
- * Return 2 if right bumper hit.
- * Return 3 if bot is in front of a cliff.
- * Return 4 if bot hit the boundary.
+ * Returns a nonzero char, depending on if the bot encountered anything while moving, 0 otherwise.
+ * 
  */
 char move_forward(oi_t *sensor, int centimeters, int spd) {
-	//chack sensors on bot
+	//used to send partial movement info
+    char str10[15];
+	//update sensors for initial check
+    oi_update(sensor);
     if (checkAll(sensor)) {
-        return 1;
+		///lets driver know movement is cancelled
+		uart_sendStr("Fwd Movement Blocked \n\r");	
+        return 1;	//blocks forward movement
+		
     }
+	
+    int sum = 0;
+	//status of front sensors
+	char test = 0; 
 
-    int sum = 0, hit = 0;
-	char test = 0;
-
-    oi_setWheels((spd+CALIB_L), (spd+CALIB_R)); // move forward;
+    oi_setWheels((spd+CALIB_L), (spd+CALIB_R)); // engages wheels 
 
     while (sum < centimeters*10) {
         oi_update(sensor);
@@ -35,54 +49,59 @@ char move_forward(oi_t *sensor, int centimeters, int spd) {
 		
         if(test){
             uart_sendStr("Fwd Movement Stopped \n\r");
-			break;
+            sprintf(str10, "move %d \n", sum/10);	//sends back partial movement status
+            uart_sendStr(str10);
+            stop();
+            return test;	//return nonzero
 		}
 
         sum += sensor->distance;
     }
 
     stop();
-    uart_sendStr("Fwd Movement Complete \n\r");
-
+	uart_sendStr("move 10 \n");	//return distance for GUI processessing
     return test;
 }
 
-
-///Turn counterclockwise a certain number of degrees
+///turns bot counterclockwise by a number of degrees
 /**
- * The wheels are set to turn in opposite directions to cause the turn.
+ * Turn the bot counterclockwise a certain amount and speed.
+ * Sends string via UART to confirm complete turn is finished.
  *
  * @param sensor - an open interface sensor pointer
  * @param degrees - how far the bot will turn
  * @param speed - how fast to turn
+ *
  */
-void turn_ccw(oi_t *sensor, int degrees, int speed) {
+int turn_ccw(oi_t *sensor, int degrees, int speed) {
 
     int sum = 0;
-    oi_setWheels(speed, -speed); // move forward;
+    oi_setWheels(speed, -speed); //engage wheels for counterclockwise movement
 
     while (sum < degrees) {
-        oi_update(sensor);
-        sum += sensor->angle;
+         oi_update(sensor);
+         sum += sensor->angle;
     }
 
     stop();
+	uart_sendStr("angle -10 \n");	
 
-    uart_sendChar('6');
+	return -degrees;
 }
-
-///Turn clockwise a certain number of degrees
+///Turns bot clockwise a certain number of degrees
 /**
- * The wheels are set to turn in opposite directions to cause the turn.
+ * Turn the bot clockwise a certain amount and speed.
+ * Sends string via UART to confirm complete turn is finished.
  *
  * @param sensor - an open interface sensor pointer
  * @param degrees - how far the bot will turn
  * @param speed - how fast to turn
+ *
  */
-void turn_cw(oi_t *sensor, int degrees, int speed) {
+int turn_cw(oi_t *sensor, int degrees, int speed) {
 
     int sum = degrees;
-    oi_setWheels(-speed, speed); // move forward;
+    oi_setWheels(-speed, speed); //engage wheels for clockwise movement
 
     while (sum > 0) {
         oi_update(sensor);
@@ -90,23 +109,23 @@ void turn_cw(oi_t *sensor, int degrees, int speed) {
     }
 
     stop();
+	uart_sendStr("angle 10 \n");
 
-    uart_sendChar('6');
+	return degrees;
 }
 
 ///Move in reverse a certain distance
 /**
  *
  * Similar to the function for moving forward.
- * While moving back, the cliff signals are checked to make sure the bot doesn't accidentally back up over the boundary.
- * Sends a 7 through UART to let the driver know the reverse completed successfully.
- * Sends a 4 if the boundary was hit.
+ * Sends string via UART when backwards movement is complete.
  *
  * @param sensor - an open interface sensor pointer
  * @param centimeters - how far the bot will move backwards
  * @param spd - the speed at which the bot will move (speed of the motors)
+ * 
  */
-void move_backward(oi_t *sensor, int centimeters, int spd) {
+int move_backward(oi_t *sensor, int centimeters, int spd) {
 
     int sum = centimeters * 10;
     oi_setWheels(-spd, -spd); // move forward;
@@ -115,53 +134,60 @@ void move_backward(oi_t *sensor, int centimeters, int spd) {
         oi_update(sensor);
         sum += sensor->distance;
 
-        if (sensors_CheckBorder(sensor)) {
-            break;
-        }
     }
 
     stop();
-
-    uart_sendChar('7');
+	uart_sendStr("move -10 \n");
+	return -centimeters;
 }
 
-///Stop the bot by disabling its motors
+///stops wheels
 /**
- * Set the wheels' power to 0.
+ * Stop the bot by disabling its motors.
+ *
  */
 void stop() {
     oi_setWheels(0, 0);
 }
 
-///A check for objects detected by open interface.
+///checks all front sensors.
 /**
- * Checks for left bumper, right bumper, and cliff sensors.
+ * Checks left bumper, right bumper, cliff, and boundary sensors.
  * Run at the beginning of and during forward movement.
- *
+ * Returns char based on status of the sensors.
  * @param sensor - open interface sensor pointer
+ * 
  */
 char checkAll(oi_t *sensor) {
     char status = 0;
-
+    char string[20];
+	
 	if (sensor->bumpLeft && sensor->bumpRight) {
-		//    status = '9';
+		    status = '9';
+			
+		    sprintf(string,"Bump left \r\n");
+		    uart_sendStr(string);
+		    sprintf(string,"Bump right \r\n");
+		    uart_sendStr(string);
         }
         else if (sensor->bumpLeft) {
-		//	status = '1';
+			status = '1';
+			
+			sprintf(string,"Bump left \r\n");
+			uart_sendStr(string);
         }
         else if (sensor->bumpRight) {
-        //    status = '2';
+			status = '2';
+			
+            sprintf(string,"Bump right \r\n");
+            uart_sendStr(string);  
         }
         else if (sensors_CheckCliff(sensor)) {
-		//	status = '3';
+			status = '3';
         }
         else if (sensors_CheckBorder(sensor)) {
-      //      status = '4';
+           status = '4';
         }
-	if(status){
-		uart_sendStr(sprintf("Status: %c", status));
-	//	return status;
-	}
 		
     return status;
 }
