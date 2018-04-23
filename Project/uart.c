@@ -10,9 +10,10 @@
 
 #include "uart.h"
 
-  
+///setup UART1 for putty communication.
 /**
  * This method enables the required pins for UART1 functionality.
+ * 8 data bits, one stop, no parity or fifo.
  *
  */
 void uart_init(void){
@@ -42,12 +43,11 @@ void uart_init(void){
     //re-enable enable RX, TX, and uart
     UART1_CTL_R = (UART_CTL_RXE | UART_CTL_TXE | UART_CTL_UARTEN);
 }
-
+///sends char to putty
 /**
  * This method sends a single character over uart.
  * @author Tanner Dempsay
  * @param data The character to be sent 
- * 
  */
 void uart_sendChar(char data){
 
@@ -56,10 +56,9 @@ void uart_sendChar(char data){
     }
     UART1_DR_R = data;
 }
-
+///receives a single char
 /**
- * This method waits to receive a single character over uart.
- *
+ * This method waits to receive a single char over uart.
  */
 int uart_receive(void){
     char data = 0;
@@ -70,12 +69,11 @@ int uart_receive(void){
     data = (char) (UART1_DR_R & 0xFF);
     return data;
 }
-
+///sends string to putty
 /**
- * This method sends a string of chars over the uart.
+ * This method sends a string of chars over the UART.
  * @author Tanner Dempsay
- * @param char *data  String of chars to transmit
- *
+ * @param char *data  String of chars to transmit.
  */
 void uart_sendStr(const char *data){
 
@@ -87,66 +85,4 @@ void uart_sendStr(const char *data){
         j++;
 
     }
-
-
-
 }
-//
-//int main(void){
-//    char str[21];
-//    int i = 0;
-//    char data = 0;
-//    lcd_init();
-//   // uart_init();
-//    WiFi_start(thePassword);
-//    button_init();
-//    //char bstr[100];
-//    char strprev[101] = " ";\
-//
-//    while(1==1){
-//        char bstr[101] = "";
-//        data = uart_receive();
-//        int button = button_getButton();
-//
-//        if(data == '\r' || strlen(str) == 20){
-//            if(data == '\r')
-//            {
-//                uart_sendChar(10);
-//            }
-//            lcd_printf("");
-//            lcd_printf("%.20s", str);
-//            int j = 0;
-//            while(j < 20){
-//                str[j] = '\0';
-//                j++;
-//            }
-//            i = 0;
-//        }else if(data != 0){
-//           str[i] = data;
-//            i++;
-//            uart_sendChar(data);
-//            lcd_printf(" %d : %c", i , data);
-//            data = 0;
-//            }
-//
-//     switch(button){
-//         case 1: strncpy(bstr, "idk",100); break;
-//         case 2: strncpy(bstr, "send nudes",100); break;
-//         case 3: strncpy(bstr, "just button 3",100);break;
-//         case 4: strncpy(bstr, "Blue, no green, Ahhhhh!!!!!!!!!!!",100); break;
-//         case 5: strncpy(bstr, "No",100);break;
-//         case 6: strncpy(bstr, "Yes",100); break;
-//         default: break;
-//     }
-//     if(strlen(bstr) >= 2 && !(strcmp(strprev, bstr) == 0) ){
-//         int j = 0;
-//         for(j = 0; j < strlen(bstr); j++){
-//             uart_sendChar(bstr[j]);
-//         }
-//         uart_sendChar(10);
-//         strncpy(strprev, bstr,100);
-//         timer_waitMillis(500);
-//     }
-//
-//     }
-//    }
