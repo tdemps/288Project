@@ -9,8 +9,10 @@
 #include "uart.h"
 #include <entertainment.h>
 
-
-
+/**
+ * Function that set up the notes for the songs that the bot would play,
+ * along with the duration
+ */
 void init_Songs(){
     //setup
         unsigned char song[5] = {69,70,71,72,'\0'};
@@ -26,10 +28,16 @@ void init_Songs(){
 		oi_loadSong(1, 11, song2, song2dur);
 }
 
+/**
+ * Function that played the song over the open interface of the robot
+ */
 void playSong(int num){
     oi_play_song(num);
 }
 
+/**
+ * Function would flash the leds when the robot would enter the goal of the maze
+ */
 void flash_leds(){
     int i;
     for(i=0; i<5; i++){
